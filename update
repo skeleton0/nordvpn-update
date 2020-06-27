@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ls | grep -v 'pass.txt\|update' | xargs --no-run-if-empty rm -rf
+ls | grep -Ev '^(pass\.txt|update)$' | xargs --no-run-if-empty rm -rf
 wget https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
 unzip ovpn.zip
 mv ovpn_udp/au* .
