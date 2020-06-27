@@ -1,0 +1,7 @@
+#!/bin/bash
+ls | grep -v 'pass.txt\|update' | xargs --no-run-if-empty rm -r
+wget https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
+unzip ovpn.zip
+mv ovpn_udp/au* .
+rm -r ovpn.zip ovpn_tcp ovpn_udp
+sed -i 's/auth-user-pass/auth-user-pass pass.txt/' *.ovpn
