@@ -6,3 +6,13 @@ unzip ovpn.zip
 mv ovpn_udp/au* .
 rm -rf ovpn.zip ovpn_tcp ovpn_udp
 sed -i 's/auth-user-pass/auth-user-pass pass.txt/' *.ovpn
+
+# Append DNS leak fix to config files
+for f in $(ls | grep ovpn)
+do
+	echo 'script-security 2' >> "$f"
+	echo 'up /etc/openvpn/update-systemd-resolved' >> "$f"
+	echo 'down /etc/openvpn/update-systemd-resolved' >> "$f"
+	echo 'down-pre' >> "$f"
+	echo 'dhcp-option DOMAIN-ROUTE .' >> "$f"
+done
